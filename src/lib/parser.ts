@@ -53,7 +53,7 @@ export function parseContract(text: string, name: string): Contract {
   let value = num(valueM?.[1], 120000);
   if (valueM?.[2]) value *= /m/i.test(valueM[2]) ? 1_000_000 : 1000;
   const termM = t.match(/(\d+)\s*\(?\w*\)?\s*(months?|years?)/i);
-  const termMonths = termM ? num(termM[1], 12) * (/year/i.test(termM[2]) ? 12 : 1) : 12;
+  const termMonths = termM ? num(termM[1], 12) * (/year/i.test(termM[2] ?? "") ? 12 : 1) : 12;
   const effective = t.match(/(\d{4}-\d{2}-\d{2})/)?.[1] || t.match(/effective\s+(?:as of\s+)?([A-Z][a-z]+ \d{1,2},? \d{4})/i)?.[1] || "2026-01-01";
   const paymentDays = num(t.match(/net\s*-?\s*(\d+)/i)?.[1] || t.match(/within\s+(\d+)\s+days/i)?.[1], 30);
   const sla = num(t.match(/(\d{2}(?:\.\d+)?)\s*%\s*(?:uptime|availability)/i)?.[1] || t.match(/(?:uptime|availability)[^.]*?(\d{2}(?:\.\d+)?)\s*%/i)?.[1], 99.5);
