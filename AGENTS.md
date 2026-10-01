@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- App state lives in a client-side reducer store (src/lib/store.tsx) persisted to localStorage; contract parsing is deterministic regex simulation in src/lib/parser.ts — no backend needed for the demo.
