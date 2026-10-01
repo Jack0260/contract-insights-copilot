@@ -113,7 +113,7 @@ export function series(c: Contract, months: number) {
   const names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   for (let i = 0; i < months; i++) {
     out.push({
-      month: names[(i + 10 - months + 24) % 12],
+      month: names[(i + 10 - months + 24) % 12] ?? "",
       revenue: Math.round(monthly * (0.85 + rnd() * 0.3)),
       uptime: +(c.sla - 0.4 + rnd() * 0.8).toFixed(2),
     });

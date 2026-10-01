@@ -35,7 +35,7 @@ function Ingest() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const readFile = (f: File) => {
-    if (f.size > 2_000_000) return toast.error("File too large (max 2 MB)");
+    if (f.size > 2_000_000) { toast.error("File too large (max 2 MB)"); return; }
     setResult(null);
     setName(f.name);
     if (/\.(txt|md|csv|json|html?)$/i.test(f.name) || f.type.startsWith("text/")) {
@@ -44,14 +44,14 @@ function Ingest() {
       r.onerror = () => toast.error("Could not read file");
       r.readAsText(f);
     } else {
-      const s = SAMPLES[f.size % SAMPLES.length];
+      const s = SAMPLES[f.size % SAMPLES.length] ?? SAMPLES[0]!;
       setText(`[Simulated OCR of ${f.name}]\n\n${s.text}`);
       toast.info("Binary document detected — simulated OCR text extracted");
     }
   };
 
   const run = async () => {
-    if (text.trim().length < 40) return toast.error("Please provide at least 40 characters of contract text");
+    if (text.trim().length < 40) { toast.error("Please provide at least 40 characters of contract text"); return; }
     setResult(null);
     for (let i = 0; i < STAGES.length; i++) {
       setStage(i);

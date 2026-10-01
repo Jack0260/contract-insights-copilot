@@ -41,9 +41,9 @@ function Dashboard() {
     const rows: { month: string; revenue: number; uptime: number }[] = [];
     contracts.forEach((c) =>
       series(c, months).forEach((p, i) => {
-        if (!rows[i]) rows[i] = { month: p.month, revenue: 0, uptime: 0 };
-        rows[i].revenue += p.revenue;
-        rows[i].uptime += p.uptime / contracts.length;
+        const row = (rows[i] ??= { month: p.month, revenue: 0, uptime: 0 });
+        row.revenue += p.revenue;
+        row.uptime += p.uptime / contracts.length;
       }),
     );
     return rows.map((r) => ({ ...r, uptime: +r.uptime.toFixed(2) }));
@@ -205,7 +205,7 @@ function Dashboard() {
   );
 }
 
-function Stat({ icon: Icon, label, value, sub, tone }: { icon: typeof Gauge; label: string; value: string; sub: string; tone?: string }) {
+function Stat({ icon: Icon, label, value, sub, tone }: { icon: typeof Gauge; label: string; value: string; sub: string; tone?: string | undefined }) {
   return (
     <div className="surface p-4">
       <div className="flex items-center justify-between text-xs text-muted-foreground">{label}<Icon className="h-4 w-4 text-primary" /></div>
